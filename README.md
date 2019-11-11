@@ -1,1 +1,1 @@
-# repositorioProyectos2
+Repositorio creado para guardar trabajos realizados en las prácticas de la empresa y demás.
