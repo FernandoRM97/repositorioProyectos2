@@ -4,7 +4,7 @@ public class Usuario {
 
 	public String nombre;
 	
-	public String contraseña;
+	public String clave;
 
 	public String getNombre() {
 		return nombre;
@@ -14,18 +14,18 @@ public class Usuario {
 		this.nombre = nombre;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getClave() {
+		return clave;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setClave(String clave) {
+		this.clave = clave;
 	}
 
-	public Usuario(String nombre, String contraseña) {
+	public Usuario(String nombre, String clave) {
 		super();
 		this.nombre = nombre;
-		this.contraseña = contraseña;
+		this.clave = clave;
 	}
 	
 }
