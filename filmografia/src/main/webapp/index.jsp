@@ -1,4 +1,8 @@
 <html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Menú Principal</title>
+</head>
 <body>
 	<p align="right"><a href="login.jsp"><input type="button"
 		value="Login"></a></p>
