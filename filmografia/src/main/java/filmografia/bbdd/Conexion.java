@@ -12,7 +12,7 @@ import filmografia.model.Usuario;
 
 public class Conexion {
 
-	private static final String URL = "jdbc:oracle:thin:@192.168.205.76:1521:xe";
+	private static final String URL = "jdbc:oracle:thin:@192.168.1.46:1521:xe";
 	private static final String USERNAME = "cine";
 	private static final String PASSWORD = "cine";
 
