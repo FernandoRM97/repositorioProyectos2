@@ -14,9 +14,9 @@
 		<a href="mantenimiento.jsp"><input type="button"
 			value="Mantenimiento peliculas"></a>
 	</p>
-	<form method="POST">
+	<form method="POST" action="mantenimientoController">
 	<p align="center">
-		<a href="mantenimientoController"><input type="button" value="Inicio"></a>
+		<input type="submit" value="Inicio">
 	</p>
 	</form>
 </body>

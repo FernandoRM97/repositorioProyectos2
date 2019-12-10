@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"   
+   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html"></f:view>
+
+<h:head>
+
+</h:head>
+
+
+<h:body>
+	<h:form>
+
+		<!-- Form de Cadastro -->
+		<h:panelGrid id="panelgrid" columns="2" cellpadding="5">
+			<p:outputLabel value="Id:(Borrar/Modificar)" for="acId" />
+			<p:autoComplete id="acId" value="#{personaMB.persona.id}" />
+			<p:outputLabel value="Nombre:" for="acNombre" />
+			<p:autoComplete id="acNombre" value="#{personaMB.persona.nombre}" />
+			<p:outputLabel value="E-Mail:" for="acEmail" />
+			<p:autoComplete id="acEmail" value="#{personaMB.persona.email}" />
+			<p:outputLabel value="Telefono:" for="acTelefono" />
+			<p:autoComplete id="acTelefono" value="#{personaMB.persona.telefono}" />
+			<p:messages for="messages"/>
+			<p:splitButton value=" Guardar" action="#{personaMB.salvar}"
+				type="button" update="panelgrid" icon="ui-icon-disk">
+				<p:menuitem value=" Modificar" action="#{personaMB.modificar}"
+					update="panelgrid" icon="ui-icon-arrowrefresh-1-s" />
+				<p:menuitem value=" Borrar" action="#{personaMB.excluir}"
+					update="panelgrid" icon="ui-icon-trash" />
+			</p:splitButton>
+
+			<!-- Grid de Consulta -->
+			<p:dataTable var="c" value="#{personaMB.list}">
+				<p:column headerText="Id">
+					<h:outputText value="#{c.id}" />
+				</p:column>
+				<p:column headerText="Nombre">
+					<h:outputText value="#{c.nombre}" />
+				</p:column>
+				<p:column headerText="Email">
+					<h:outputText value="#{c.email}" />
+				</p:column>
+				<p:column headerText="Telefono">
+					<h:outputText value="#{c.telefono}" />
+				</p:column>
+			</p:dataTable>
+		</h:panelGrid>
+	</h:form>
+
+</h:body>
+
+</html>

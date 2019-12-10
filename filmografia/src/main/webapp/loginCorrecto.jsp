@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <html>
 <head>
 <title>Login Correcto</title>
@@ -10,14 +10,15 @@
 		<a href="registrar.jsp"><input type="button"
 			value="Registrar nuevo usuario"></a>
 	</p>
-	<p align="center">
-		<a href="mantenimiento.jsp"><input type="button"
-			value="Mantenimiento peliculas"></a>
-	</p>
-	<form method="POST">
-	<p align="center">
-		<a href="mantenimientoController"><input type="button" value="Inicio"></a>
-	</p>
+	<form action="mantenimientoController" method="POST">
+		<p align="center">
+			<input type="submit" value="Mantenimiento peliculas">
+		</p>
 	</form>
+
+	<p align="center">
+		<a href="index.jsp"><input type="button" value="Inicio"></a>
+	</p>
+
 </body>
 </html>
