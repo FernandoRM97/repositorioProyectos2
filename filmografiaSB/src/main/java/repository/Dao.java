@@ -17,7 +17,7 @@ public interface Dao {
 	
 	void nuevaPeli(String director, String titulo, String fecha) throws ClassNotFoundException, SQLException;
 	
-	void modificarPeli(String director, String titulo, String fecha, String tituloMod) throws ClassNotFoundException, SQLException;
+	void modificarPeli(int id, String director, String titulo, String fecha) throws ClassNotFoundException, SQLException;
 	
 	void borrarPeli(String titulo) throws SQLException, ClassNotFoundException;
 	

@@ -9,11 +9,11 @@
 <body>
 	<br>
 	<br>
-	<form action="/logearse" method="POST">
+	<form action="/loguearse" method="POST">
 	<p align="center">Usuario:</p>
 	<p align="center"><input type="text" name="user"></p>
 	<p align="center">Contraseña:</p>
-	<p align="center"><input type="text" name="passwd"></p>
+	<p align="center"><input type="password" name="passwd"></p>
 	<p align="center"><input type="submit" value="Login"></p>
 	</form>
 	

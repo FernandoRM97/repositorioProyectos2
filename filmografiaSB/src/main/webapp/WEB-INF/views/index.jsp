@@ -14,7 +14,7 @@
 		<a href="/info"> <input type="button" value="Información general"></a>
 	</p>
 	<p align="center">
-		<a href=""><input type="button" value="Consultar directores"></a>
+		<a href="/consultar"><input type="button" value="Consultar directores"></a>
 	</p>
 </body>
 </html>

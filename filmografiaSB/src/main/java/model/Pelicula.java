@@ -1,10 +1,6 @@
 package model;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -13,11 +9,10 @@ import javax.persistence.Table;
 public class Pelicula {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	public String director;
 	public String titulo;
-	public Date fecha;
+	public String fecha;
 
 	public int getId() {
 		return id;
@@ -43,16 +38,28 @@ public class Pelicula {
 		this.titulo = titulo;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha2) {
+		this.fecha = fecha2;
+	}
+
+	public Pelicula() {
+		super();
+	}
+
+	public Pelicula(String director, String titulo, String fecha) {
+		super();
+		this.director = director;
+		this.titulo = titulo;
 		this.fecha = fecha;
 	}
 
-	public Pelicula(String director, String titulo, Date fecha) {
+	public Pelicula(int id, String director, String titulo, String fecha) {
 		super();
+		this.id = id;
 		this.director = director;
 		this.titulo = titulo;
 		this.fecha = fecha;

@@ -239,7 +239,7 @@ public class FilmografiaController {
 			throws ServletException, IOException {
 
 		String titulo = request.getParameter("titulo");
-		
+
 		String pagina;
 
 		try {
@@ -265,7 +265,7 @@ public class FilmografiaController {
 		return new ModelAndView("modificarPelicula");
 
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/modificarPelicula")
 	public ModelAndView modificarPelicula(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -286,7 +286,7 @@ public class FilmografiaController {
 		}
 
 		pagina = "mantenimiento";
-		
+
 		return new ModelAndView(pagina);
 
 	}

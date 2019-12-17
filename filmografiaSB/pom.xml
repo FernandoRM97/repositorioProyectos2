@@ -55,10 +55,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-solr</artifactId>
-		</dependency>
 	</dependencies>
 	<properties>
 		<java.version>1.8</java.version>
