@@ -13,6 +13,7 @@ public class Pelicula {
 	public String director;
 	public String titulo;
 	public String fecha;
+	public String url;
 
 	public int getId() {
 		return id;
@@ -46,6 +47,14 @@ public class Pelicula {
 		this.fecha = fecha2;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	public Pelicula() {
 		super();
 	}
@@ -63,6 +72,15 @@ public class Pelicula {
 		this.director = director;
 		this.titulo = titulo;
 		this.fecha = fecha;
+	}
+
+	public Pelicula(int id, String director, String titulo, String fecha, String url) {
+		super();
+		this.id = id;
+		this.director = director;
+		this.titulo = titulo;
+		this.fecha = fecha;
+		this.url = url;
 	}
 
 	@Override

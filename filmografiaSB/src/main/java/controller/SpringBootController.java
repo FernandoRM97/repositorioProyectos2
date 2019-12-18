@@ -115,7 +115,7 @@ public class SpringBootController {
 
 		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
 
-		lista = service.verPelis();
+		lista = service.sacarPelis();
 
 		request.setAttribute("listaPelis", lista);
 
@@ -134,6 +134,7 @@ public class SpringBootController {
 		String director = request.getParameter("director");
 		String titulo = request.getParameter("titulo");
 		String fecha = request.getParameter("fecha");
+		String url = request.getParameter("url");
 
 		String pagina;
 
@@ -144,7 +145,7 @@ public class SpringBootController {
 		request.setAttribute("listaPelis", lista);
 
 		try {
-			service.nuevaPeli(director, titulo, fecha);
+			service.nuevaPeli(director, titulo, fecha, url);
 			pagina = "redirect:mantenimiento";
 		} catch (ClassNotFoundException e) {
 			pagina = "nuevaPeliculaFail";
@@ -193,11 +194,13 @@ public class SpringBootController {
 		String director = request.getParameter("director");
 		String titulo = request.getParameter("titulo");
 		String fecha = request.getParameter("fecha");
+		String url = request.getParameter("url");
 
 		request.setAttribute("id", id);
 		request.setAttribute("director", director);
 		request.setAttribute("titulo", titulo);
 		request.setAttribute("fecha", fecha);
+		request.setAttribute("url", url);
 
 		return "modificarPelicula";
 	}
@@ -215,8 +218,9 @@ public class SpringBootController {
 		String director = request.getParameter("director2");
 		String titulo = request.getParameter("titulo2");
 		String fecha = request.getParameter("fecha2");
+		String url = request.getParameter("url2");
 
-		service.modificarPeli(Integer.parseInt(id), director, titulo, fecha);
+		service.modificarPeli(Integer.parseInt(id), director, titulo, fecha, url);
 
 		return "redirect:mantenimiento";
 	}
@@ -265,6 +269,18 @@ public class SpringBootController {
 		lista.clear();
 		
 		return "index";
+	}
+	
+	@RequestMapping(value = "/peliculas", method = RequestMethod.GET)
+	public String peliculas(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
+		
+		lista = service.sacarPelis();
+		
+		request.setAttribute("pelis", lista);
+		
+		return "peliculas";
 	}
 
 }

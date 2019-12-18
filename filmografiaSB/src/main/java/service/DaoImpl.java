@@ -17,7 +17,7 @@ import repository.Dao;
 public class DaoImpl implements Dao {
 
 	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("BD_JPA");
-	
+
 	static HashSet<String> listaDirectores = new HashSet<>();
 
 	@SuppressWarnings("unchecked")
@@ -86,7 +86,8 @@ public class DaoImpl implements Dao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void nuevaPeli(String director, String titulo, String fecha) throws ClassNotFoundException, SQLException {
+	public void nuevaPeli(String director, String titulo, String fecha, String url)
+			throws ClassNotFoundException, SQLException {
 
 		EntityManager entitymanager = emfactory.createEntityManager();
 		entitymanager.getTransaction().begin();
@@ -110,24 +111,26 @@ public class DaoImpl implements Dao {
 		peli.setDirector(director);
 		peli.setTitulo(titulo);
 		peli.setFecha(fecha);
+		peli.setUrl(url);
 
 		entitymanager.persist(peli);
 		entitymanager.getTransaction().commit();
 
 	}
 
-	public void modificarPeli(int id, String director, String titulo, String fecha)
+	public void modificarPeli(int id, String director, String titulo, String fecha, String url)
 			throws ClassNotFoundException, SQLException {
 
 		EntityManager entitymanager = emfactory.createEntityManager();
 		entitymanager.getTransaction().begin();
 
 		Query query = entitymanager.createQuery(
-				"UPDATE Pelicula p SET p.titulo = :titulo, p.director = :director, p.fecha = :fecha WHERE p.id = :id ");
+				"UPDATE Pelicula p SET p.titulo = :titulo, p.director = :director, p.fecha = :fecha, p.url = :url WHERE p.id = :id ");
 		query.setParameter("id", new Integer(id));
 		query.setParameter("director", director);
 		query.setParameter("titulo", titulo);
 		query.setParameter("fecha", fecha);
+		query.setParameter("url", url);
 
 		query.executeUpdate();
 
@@ -151,7 +154,7 @@ public class DaoImpl implements Dao {
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<Pelicula> consultarDirector(String director) throws ClassNotFoundException, SQLException {
-		
+
 		EntityManager entitymanager = emfactory.createEntityManager();
 		entitymanager.getTransaction().begin();
 
@@ -168,6 +171,21 @@ public class DaoImpl implements Dao {
 
 	public HashSet<String> listaDirectores() {
 		return listaDirectores;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Pelicula> sacarPelis() throws ClassNotFoundException, SQLException {
+
+		EntityManager entitymanager = emfactory.createEntityManager();
+		entitymanager.getTransaction().begin();
+
+		Query query = entitymanager.createQuery("SELECT p FROM Pelicula p");
+
+		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
+
+		lista = (ArrayList<Pelicula>) query.getResultList();
+
+		return lista;
 	}
 
 }

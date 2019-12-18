@@ -15,14 +15,16 @@ public interface Dao {
 	
 	ArrayList<Pelicula> verPelis() throws ClassNotFoundException, SQLException;
 	
-	void nuevaPeli(String director, String titulo, String fecha) throws ClassNotFoundException, SQLException;
+	void nuevaPeli(String director, String titulo, String fecha, String url) throws ClassNotFoundException, SQLException;
 	
-	void modificarPeli(int id, String director, String titulo, String fecha) throws ClassNotFoundException, SQLException;
+	void modificarPeli(int id, String director, String titulo, String fecha, String url) throws ClassNotFoundException, SQLException;
 	
 	void borrarPeli(String titulo) throws SQLException, ClassNotFoundException;
 	
 	ArrayList<Pelicula> consultarDirector(String director) throws ClassNotFoundException, SQLException;
 	
 	HashSet<String> listaDirectores();
+	
+	ArrayList<Pelicula> sacarPelis() throws ClassNotFoundException, SQLException;
 	
 }
