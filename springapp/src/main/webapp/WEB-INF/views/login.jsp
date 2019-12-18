@@ -17,6 +17,6 @@
 	<p align="center"><input type="submit" value="Login"></p>
 	</form>
 	
-	<p align="center"><a href="http://localhost:8080/springapp/"><input type="button" value="Inicio"></a></p>
+	<p align="center"><a href="http://localhost:8080/springapp/filmografia/index"><input type="button" value="Inicio"></a></p>
 </body>
 </html>

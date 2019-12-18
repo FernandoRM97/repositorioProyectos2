@@ -37,6 +37,6 @@
 		libero quis ligula accumsan dictum. Vivamus est ligula, consectetur
 		sed sapien porta, scelerisque iaculis dolor.</p>
 	<br>
-	<p align="center"><a href="http://localhost:8080/springapp/"><input type="button" value="Inicio"></a></p>
+	<p align="center"><a href="http://localhost:8080/springapp/filmografia/index"><input type="button" value="Inicio"></a></p>
 </body>
 </html>

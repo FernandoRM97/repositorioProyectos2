@@ -2,23 +2,12 @@ package com.companyname.springapp.domain;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-@Entity
-@Table(name="pelicula")
 public class Pelicula {
 
-    @Id
-    @Column(name = "director")
 	public String director;
 
-    @Column(name = "titulo")
 	public String titulo;
 
-    @Column(name = "fecha")
 	public Date fecha;
 
 	public String getDirector() {

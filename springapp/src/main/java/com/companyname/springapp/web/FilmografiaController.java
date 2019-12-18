@@ -220,7 +220,7 @@ public class FilmografiaController {
 			pagina = "nuevaPeliculaFail";
 		}
 
-		pagina = "mantenimiento";
+		pagina = "index";
 
 		return new ModelAndView(pagina);
 
@@ -239,7 +239,7 @@ public class FilmografiaController {
 			throws ServletException, IOException {
 
 		String titulo = request.getParameter("titulo");
-		
+
 		String pagina;
 
 		try {
@@ -252,7 +252,7 @@ public class FilmografiaController {
 			pagina = "borrarPeliculaFail";
 		}
 
-		pagina = "mantenimiento";
+		pagina = "index";
 
 		return new ModelAndView(pagina);
 
@@ -265,7 +265,7 @@ public class FilmografiaController {
 		return new ModelAndView("modificarPelicula");
 
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST, value = "/modificarPelicula")
 	public ModelAndView modificarPelicula(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -285,8 +285,8 @@ public class FilmografiaController {
 			pagina = "modificarPeliculaFail";
 		}
 
-		pagina = "mantenimiento";
-		
+		pagina = "index";
+
 		return new ModelAndView(pagina);
 
 	}

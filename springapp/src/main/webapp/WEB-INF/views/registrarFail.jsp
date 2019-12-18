@@ -11,7 +11,7 @@
 	<h2 align="center">PRUEBA DE NUEVO</h2>
 	<br>
 	<p align="center">
-		<a href="login.jsp"><input type="button" value="Inicio"></a>
+		<a href="http://localhost:8080/springapp/filmografia/index"><input type="button" value="Inicio"></a>
 	</p>
 </body>
 </html>

@@ -8,6 +8,6 @@
 <body>
 	<h1 align="center">LOGIN INCORRECTO</h1>
 	<br><br>
-	<p align="center"><a href="http://localhost:8080/springapp/"><input type="button" value="Inicio"></a></p>
+	<p align="center"><a href="http://localhost:8080/springapp/filmografia/index"><input type="button" value="Inicio"></a></p>
 </body>
 </html>

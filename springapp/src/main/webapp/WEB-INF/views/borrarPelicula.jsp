@@ -20,7 +20,7 @@
 	</form>
 
 	<p align="center">
-		<a href="http://localhost:8080/springapp"><input type="button" value="Inicio"></a>
+		<a href="http://localhost:8080/springapp/filmografia/index"><input type="button" value="Inicio"></a>
 	</p>
 </body>
 </html>

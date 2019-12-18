@@ -10,7 +10,7 @@
 	<h1 align="center">CINE</h1>
 	<br>
 	<p align="center">
-		<a href="http://localhost:8080/springapp/filmografia/info">
+		<a href="/filmografia/info">
 		<input type="button"
 			value="Información general"></a>
 	</p>
