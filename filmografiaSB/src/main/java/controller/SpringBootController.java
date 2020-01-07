@@ -246,7 +246,7 @@ public class SpringBootController {
 
 		return "consultarPelis";
 	}
-	
+
 	@RequestMapping(value = "/finalizar", method = RequestMethod.GET)
 	public String finalizar(HttpServletRequest request) {
 
@@ -255,31 +255,45 @@ public class SpringBootController {
 		lista = service.listaDirectores();
 
 		request.setAttribute("directoresConsultados", lista);
-		
+
 		return "finalizar";
 	}
-	
-	@RequestMapping(value = "/fin", method = RequestMethod.POST)
+
+	@RequestMapping(value = "/fin", method = { RequestMethod.POST, RequestMethod.GET })
 	public String fin() {
 
 		HashSet<String> lista;
 
 		lista = service.listaDirectores();
-		
+
 		lista.clear();
-		
+
 		return "index";
 	}
-	
+
 	@RequestMapping(value = "/peliculas", method = RequestMethod.GET)
 	public String peliculas(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-		
+
 		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
-		
+
 		lista = service.sacarPelis();
-		
+
 		request.setAttribute("pelis", lista);
-		
+
+		return "peliculas";
+	}
+
+	@RequestMapping(value = "/filtroPelis", method = RequestMethod.POST)
+	public String filtroPeliculas(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+
+		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
+
+		String titulo = request.getParameter("titulo");
+
+		lista = service.sacarPelisFiltro(titulo);
+
+		request.setAttribute("pelis", lista);
+
 		return "peliculas";
 	}
 

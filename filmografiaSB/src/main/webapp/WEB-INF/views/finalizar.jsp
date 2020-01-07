@@ -15,7 +15,7 @@
 <body style="background-color: #B7FDF7;">
 	<nav class="navbar navbar-light bg-light"
 		style="background-color: #E7F5F4;"> <a class="navbar-brand"
-		href="/index"> <img
+		href="/fin"> <img
 		src="https://img2.freepng.es/20180404/gww/kisspng-cinema-clapperboard-film-computer-icons-clip-art-cine-5ac51166bd41a5.7114468315228644867752.jpg"
 		width="45" height="20" alt="filmografia" style="padding-left: 10px">
 		Filmografía
@@ -48,7 +48,7 @@
 	<footer class="page-footer font-small blue"
 		style="background-color: #E7F5F4; position: fixed; clear: both; bottom: 0; width: 100%">
 	<div class="footer-copyright text-center py-3">
-		© 2019 Copyright: <a href="/index"> Filmografia.com </a>
+		© 2019 Copyright: <a href="/fin"> Filmografia.com </a>
 	</div>
 	</footer>
 

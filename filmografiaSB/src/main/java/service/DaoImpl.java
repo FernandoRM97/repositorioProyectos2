@@ -64,10 +64,6 @@ public class DaoImpl implements Dao {
 		entitymanager.persist(usr);
 		entitymanager.getTransaction().commit();
 
-		entitymanager.close();
-
-		emfactory.close();
-
 	}
 
 	@SuppressWarnings("unchecked")
@@ -160,7 +156,11 @@ public class DaoImpl implements Dao {
 
 		Query query = entitymanager.createQuery("SELECT p FROM Pelicula p WHERE p.director = :director");
 		query.setParameter("director", director);
-		listaDirectores.add(director);
+
+		if (director.equals("")) {
+		} else {
+			listaDirectores.add(director);
+		}
 
 		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
 
@@ -180,6 +180,24 @@ public class DaoImpl implements Dao {
 		entitymanager.getTransaction().begin();
 
 		Query query = entitymanager.createQuery("SELECT p FROM Pelicula p");
+
+		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
+
+		lista = (ArrayList<Pelicula>) query.getResultList();
+
+		return lista;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Pelicula> sacarPelisFiltro(String titulo) throws ClassNotFoundException, SQLException {
+
+		EntityManager entitymanager = emfactory.createEntityManager();
+		entitymanager.getTransaction().begin();
+
+		Query query = entitymanager.createQuery("SELECT p FROM Pelicula p WHERE p.titulo = :titu ");
+		query.setParameter("titu", titulo);
+
+		System.out.println(titulo);
 
 		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
 

@@ -9,7 +9,7 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>model.Uusario</class>
+		<class>model.Usuario</class>
 		<class>model.Pelicula</class>
 
 		<properties>
