@@ -12,6 +12,7 @@ import javax.persistence.Query;
 
 import model.Pelicula;
 import model.Usuario;
+import model.Valoracion;
 import repository.Dao;
 
 public class DaoImpl implements Dao {
@@ -82,7 +83,7 @@ public class DaoImpl implements Dao {
 	}
 
 	@SuppressWarnings("unchecked")
-	public void nuevaPeli(String director, String titulo, String fecha, String url)
+	public void nuevaPeli(String director, String titulo, String fecha, String url, String descripcion)
 			throws ClassNotFoundException, SQLException {
 
 		EntityManager entitymanager = emfactory.createEntityManager();
@@ -108,25 +109,27 @@ public class DaoImpl implements Dao {
 		peli.setTitulo(titulo);
 		peli.setFecha(fecha);
 		peli.setUrl(url);
+		peli.setDescripcion(descripcion);
 
 		entitymanager.persist(peli);
 		entitymanager.getTransaction().commit();
 
 	}
 
-	public void modificarPeli(int id, String director, String titulo, String fecha, String url)
+	public void modificarPeli(int id, String director, String titulo, String fecha, String url, String descripcion)
 			throws ClassNotFoundException, SQLException {
 
 		EntityManager entitymanager = emfactory.createEntityManager();
 		entitymanager.getTransaction().begin();
 
 		Query query = entitymanager.createQuery(
-				"UPDATE Pelicula p SET p.titulo = :titulo, p.director = :director, p.fecha = :fecha, p.url = :url WHERE p.id = :id ");
+				"UPDATE Pelicula p SET p.titulo = :titulo, p.director = :director, p.fecha = :fecha, p.url = :url, p.descripcion = :descripcion WHERE p.id = :id ");
 		query.setParameter("id", new Integer(id));
 		query.setParameter("director", director);
 		query.setParameter("titulo", titulo);
 		query.setParameter("fecha", fecha);
 		query.setParameter("url", url);
+		query.setParameter("descripcion", descripcion);
 
 		query.executeUpdate();
 
@@ -197,13 +200,61 @@ public class DaoImpl implements Dao {
 		Query query = entitymanager.createQuery("SELECT p FROM Pelicula p WHERE p.titulo = :titu ");
 		query.setParameter("titu", titulo);
 
-		System.out.println(titulo);
+		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
+
+		lista = (ArrayList<Pelicula>) query.getResultList();
+
+		return lista;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ArrayList<Pelicula> infoPeli(String titulo) throws ClassNotFoundException, SQLException {
+
+		EntityManager entitymanager = emfactory.createEntityManager();
+		entitymanager.getTransaction().begin();
+
+		Query query = entitymanager.createQuery("SELECT p FROM Pelicula p WHERE p.titulo = :titu ");
+		query.setParameter("titu", titulo);
 
 		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
 
 		lista = (ArrayList<Pelicula>) query.getResultList();
 
 		return lista;
+	}
+
+	public void evaluar(String id, String valoracion) {
+
+		EntityManager entitymanager = emfactory.createEntityManager();
+		entitymanager.getTransaction().begin();
+
+		Valoracion val = new Valoracion();
+		val.setId(new Integer(id));
+		val.setValoracion(new Integer(valoracion));
+
+		entitymanager.persist(val);
+		entitymanager.getTransaction().commit();
+
+		EntityManager entitymanager2 = emfactory.createEntityManager();
+		entitymanager2.getTransaction().begin();
+
+		Query query = entitymanager2.createQuery("SELECT AVG(v.valoracion) FROM Valoracion v WHERE v.id = :id ");
+		query.setParameter("id", new Integer(id));
+
+		Double media = (Double) query.getSingleResult();
+
+		entitymanager2.getTransaction().commit();
+
+		EntityManager entitymanager3 = emfactory.createEntityManager();
+		entitymanager3.getTransaction().begin();
+
+		Query query2 = entitymanager3.createQuery("UPDATE Pelicula p SET p.valoracion = :valoracion WHERE p.id = :id");
+		query2.setParameter("valoracion", media);
+		query2.setParameter("id", new Integer(id));
+		query2.executeUpdate();
+
+		entitymanager3.getTransaction().commit();
+
 	}
 
 }

@@ -48,7 +48,8 @@
 								name="director" type="hidden" value="${info.director}">
 							<input name="titulo" type="hidden" value="${info.titulo}">
 							<input name="fecha" type="hidden" value="${info.fecha}">
-							<input name="url" type="hidden" value="${info.url}">
+							<input name="url" type="hidden" value="${info.url}"> <input
+								name="descripcion" type="hidden" value="${info.descripcion}">
 							<p align="center">
 								<input type="submit" class="btn btn-warning"
 									value="Modificar Pelicula">

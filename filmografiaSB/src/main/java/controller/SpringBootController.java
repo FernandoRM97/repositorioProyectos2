@@ -135,6 +135,7 @@ public class SpringBootController {
 		String titulo = request.getParameter("titulo");
 		String fecha = request.getParameter("fecha");
 		String url = request.getParameter("url");
+		String descripcion = request.getParameter("descripcion");
 
 		String pagina;
 
@@ -145,7 +146,7 @@ public class SpringBootController {
 		request.setAttribute("listaPelis", lista);
 
 		try {
-			service.nuevaPeli(director, titulo, fecha, url);
+			service.nuevaPeli(director, titulo, fecha, url, descripcion);
 			pagina = "redirect:mantenimiento";
 		} catch (ClassNotFoundException e) {
 			pagina = "nuevaPeliculaFail";
@@ -195,12 +196,14 @@ public class SpringBootController {
 		String titulo = request.getParameter("titulo");
 		String fecha = request.getParameter("fecha");
 		String url = request.getParameter("url");
+		String descripcion = request.getParameter("descripcion");
 
 		request.setAttribute("id", id);
 		request.setAttribute("director", director);
 		request.setAttribute("titulo", titulo);
 		request.setAttribute("fecha", fecha);
 		request.setAttribute("url", url);
+		request.setAttribute("descripcion", descripcion);
 
 		return "modificarPelicula";
 	}
@@ -219,8 +222,9 @@ public class SpringBootController {
 		String titulo = request.getParameter("titulo2");
 		String fecha = request.getParameter("fecha2");
 		String url = request.getParameter("url2");
+		String descripcion = request.getParameter("descripcion2");
 
-		service.modificarPeli(Integer.parseInt(id), director, titulo, fecha, url);
+		service.modificarPeli(Integer.parseInt(id), director, titulo, fecha, url, descripcion);
 
 		return "redirect:mantenimiento";
 	}
@@ -295,6 +299,34 @@ public class SpringBootController {
 		request.setAttribute("pelis", lista);
 
 		return "peliculas";
+	}
+
+	@RequestMapping(value = "/informacion", method = RequestMethod.POST)
+	public String informacion(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+
+		String titulo = request.getParameter("titulo");
+
+		request.setAttribute("titulo", titulo);
+
+		ArrayList<Pelicula> peli = new ArrayList<Pelicula>();
+
+		peli = service.infoPeli(titulo);
+
+		request.setAttribute("peli", peli);
+
+		return "informacion";
+	}
+
+	@RequestMapping(value = "/evaluar", method = RequestMethod.POST)
+	public String evaluar(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+
+		String id = request.getParameter("id");
+
+		String valoracion = request.getParameter("rating");
+
+		service.evaluar(id, valoracion);
+
+		return "redirect:peliculas";
 	}
 
 }

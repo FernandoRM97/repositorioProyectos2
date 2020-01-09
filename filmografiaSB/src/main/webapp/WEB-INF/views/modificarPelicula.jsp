@@ -41,6 +41,11 @@
 		<p align="center">
 			<input type="text" name="url2" required>
 		</p>
+		<p align="center">Descripcion</p>
+		<p align="center">
+			<input type="text" name="descripcion2" placeholder="${descripcion}"
+				required>
+		</p>
 		<p align="center">
 			<input type="submit" class="btn btn-success"
 				value="Modificar Pelicula">

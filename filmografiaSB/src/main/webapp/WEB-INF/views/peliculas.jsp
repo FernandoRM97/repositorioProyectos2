@@ -46,7 +46,13 @@
 						<b>Titulo:</b> ${info.titulo}
 					</div>
 					<li class="list-group-item"><b>Director:</b> ${info.director}</li>
-					<li class="list-group-item"><b>Fecha:</b> ${info.fecha}</li>
+					<li class="list-group-item"><b>Valoracion:</b>
+						${info.valoracion}</li>
+					<form action="informacion" method="POST">
+						<input name="titulo" type="hidden" value="${info.titulo}">
+						<input type="submit" value="Más Información" style="width: 100%"
+							class="btn btn-warning">
+					</form>
 				</ul>
 			</div>
 			</br>
