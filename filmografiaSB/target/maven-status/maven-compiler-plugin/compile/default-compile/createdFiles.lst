@@ -1,0 +1,7 @@
+model\Valoracion.class
+repository\Dao.class
+controller\SpringBootController.class
+application\SpringBootApplicationLauncher.class
+service\DaoImpl.class
+model\Usuario.class
+model\Pelicula.class
