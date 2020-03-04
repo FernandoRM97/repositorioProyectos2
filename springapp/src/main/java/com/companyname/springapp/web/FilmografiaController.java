@@ -285,7 +285,11 @@ public class FilmografiaController {
 			pagina = "modificarPeliculaFail";
 		}
 
+<<<<<<< HEAD
 		pagina = "index";
+=======
+		pagina = "mantenimiento";
+>>>>>>> 24d19474cd437432ba1fa1fc58e719a7f1213677
 
 		return new ModelAndView(pagina);
 
