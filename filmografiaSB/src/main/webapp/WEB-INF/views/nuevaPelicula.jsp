@@ -38,6 +38,10 @@
 		<p align="center">
 			<input type="text" name="url" required>
 		</p>
+		<p align="center">Descripción</p>
+		<p align="center">
+			<input type="text" name="descripcion" required>
+		</p>
 		<p align="center">
 			<input type="submit" class="btn btn-success" value="Crear Pelicula">
 		</p>

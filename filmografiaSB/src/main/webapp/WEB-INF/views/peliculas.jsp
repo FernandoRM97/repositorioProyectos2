@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta charset="utf-8">
 <title>Peliculas</title>
 
 <link rel="stylesheet"
@@ -22,30 +23,46 @@
 		Filmografía
 	</a> </nav>
 	<br>
+	<br>
+
+	<div style="text-align: center">
+		<form action="/filtroPelis" method="POST">
+			<input type="text" name="titulo" style="width: 40%"> <input
+				type="submit" value="Buscar" class="btn btn-success">
+		</form>
+	</div>
+
+	<br>
 
 	<div class="row justify-content-md-center">
 		<c:forEach items="${pelis}" var="info">
 			<div class="card"
 				style="width: 18rem; margin-right: 6px; margin-top: 6px;"
 				class="col-6 col-md-4 col-lg-3">
-				<img class="card-img-top" src="${info.url}" alt="Card image cap"
+				<img class="card-img-top" src="${info.url}" alt="Portada película"
 					width="100px" height="230px">
 				<ul class="list-group list-group-flush">
 					<div class="card-header">
 						<b>Titulo:</b> ${info.titulo}
 					</div>
 					<li class="list-group-item"><b>Director:</b> ${info.director}</li>
-					<li class="list-group-item"><b>Fecha:</b> ${info.fecha}</li>
+					<li class="list-group-item"><b>Valoracion:</b>
+						${info.valoracion}</li>
+					<form action="informacion" method="POST">
+						<input name="titulo" type="hidden" value="${info.titulo}">
+						<input type="submit" value="Más Información" style="width: 100%"
+							class="btn btn-warning">
+					</form>
 				</ul>
 			</div>
 			</br>
 			</br>
 		</c:forEach>
 	</div>
-	
+
 	<br>
 	<br>
-	
+
 	<p align="center">
 		<a href="/index"><input type="button" class="btn btn-primary"
 			value="Volver atrás"></a>

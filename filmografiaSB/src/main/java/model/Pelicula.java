@@ -10,10 +10,19 @@ public class Pelicula {
 
 	@Id
 	private int id;
+<<<<<<< HEAD
 	private String director;
 	private String titulo;
 	private String fecha;
 	private String url;
+=======
+	public String director;
+	public String titulo;
+	public String fecha;
+	public String url;
+	public String descripcion;
+	public double valoracion;
+>>>>>>> 3e96b4a8d7ab99a1446c1d609cb00ea6fcb3a646
 
 	public int getId() {
 		return id;
@@ -55,6 +64,22 @@ public class Pelicula {
 		this.url = url;
 	}
 
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public double getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(double valoracion) {
+		this.valoracion = valoracion;
+	}
+
 	public Pelicula() {
 		super();
 	}
@@ -83,9 +108,16 @@ public class Pelicula {
 		this.url = url;
 	}
 
-	@Override
-	public String toString() {
-		return "Pelicula [director=" + director + ", titulo=" + titulo + ", fecha=" + fecha + "]";
+	public Pelicula(int id, String director, String titulo, String fecha, String url, String descripcion,
+			double valoracion) {
+		super();
+		this.id = id;
+		this.director = director;
+		this.titulo = titulo;
+		this.fecha = fecha;
+		this.url = url;
+		this.descripcion = descripcion;
+		this.valoracion = valoracion;
 	}
 
 }
