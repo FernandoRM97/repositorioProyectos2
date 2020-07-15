@@ -9,12 +9,11 @@
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 
-		<class>model.Usuario</class>
-		<class>model.Pelicula</class>
-
+		<class>model.Productos</class>
+		
 		<properties>
 
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/filmografia" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/restaurante2" />
 			<property name="javax.persistence.jdbc.user" value="root" />
 			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

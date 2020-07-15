@@ -2,65 +2,87 @@ package controller;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashSet;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import model.Pelicula;
-import model.Usuario;
-import service.DaoImpl;
+import model.Email;
+import model.Pedidos;
+import model.PedidosProductos;
+import model.Productos;
+import model.Restaurantes;
+import repository.DaoImpl;
+import service.CarritoServiceImpl;
+import service.LoginServiceImpl;
+import service.PedidosServiceImpl;
+import service.ProductosServiceImpl;
+import service.RestauranteServiceImpl;
 
 @Controller
 @EnableAutoConfiguration
 public class SpringBootController {
 
 	DaoImpl service = new DaoImpl();
+	LoginServiceImpl serviceLogin = new LoginServiceImpl();
+	RestauranteServiceImpl serviceRestaurante = new RestauranteServiceImpl();
+	ProductosServiceImpl serviceProducto = new ProductosServiceImpl();
+	PedidosServiceImpl servicePedido = new PedidosServiceImpl();
+	CarritoServiceImpl serviceCarrito = new CarritoServiceImpl();
+	
+	String correo = "testrestaurante1212@gmail.com";
+	
+	Integer id = null;
+	ArrayList<PedidosProductos> carrito = new ArrayList<PedidosProductos>();
 
-	@RequestMapping(value = "", method = RequestMethod.GET)
+	@GetMapping(value = "")
 	public String index() {
 
 		return "index";
 	}
 
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	@GetMapping(value = "/index")
 	public String index2() {
 
 		return "index";
 	}
 
-	@RequestMapping(value = "/info", method = RequestMethod.GET)
+	@GetMapping(value = "/info")
 	public String info() {
 
 		return "info";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	@GetMapping(value = "/login")
 	public String login() {
 
 		return "login";
 	}
 
-	@RequestMapping(value = "/loguearse", method = RequestMethod.POST)
+	@PostMapping(value = "/loguearse")
 	public String loguearse(HttpServletRequest request) {
 
-		String usuario = request.getParameter("user");
+		String correo = request.getParameter("user");
 		String clave = request.getParameter("passwd");
 
 		String pagina;
 
 		try {
 
-			ArrayList<Usuario> lista = new ArrayList<Usuario>();
+			ArrayList<Restaurantes> lista = new ArrayList<Restaurantes>();
 
-			lista = service.consultarLogin(usuario, clave);
+			lista = serviceLogin.consultarLogin(correo, clave);
 
-			if (lista.get(0).getNombre().equals(usuario) && lista.get(0).getClave().equals(clave)) {
-				request.setAttribute("nombre", usuario);
+			if (lista.get(0).getCorreo().equals(correo) && lista.get(0).getClave().equals(clave)) {
+				request.setAttribute("correo", correo);
+				
+				id = serviceRestaurante.sacarIdRestaurante(correo);
+				
 				pagina = "loginCorrecto";
 			} else {
 				pagina = "loginIncorrecto";
@@ -78,255 +100,182 @@ public class SpringBootController {
 		return pagina;
 	}
 
-	@RequestMapping(value = "/loginCorrecto", method = RequestMethod.GET)
+	@GetMapping(value = "/loginCorrecto")
 	public String loginCorrecto() {
 
 		return "loginCorrecto";
 	}
 
-	@RequestMapping(value = "/registrar", method = RequestMethod.GET)
-	public String registrar() {
+	@GetMapping(value = "/bebidasCon")
+	public String bebidasCon(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		ArrayList<Productos> lista = new ArrayList<Productos>();
 
-		return "registrar";
+		lista = service.bebidasCon();
+
+		request.setAttribute("bebidas", lista);
+		
+		return "bebidasCon";
 	}
+	
+	@GetMapping(value = "/bebidasSin")
+	public String bebidasSin(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		ArrayList<Productos> lista = new ArrayList<Productos>();
 
-	@RequestMapping(value = "/registrarNuevoUser", method = RequestMethod.POST)
-	public String registrarNuevoUser(HttpServletRequest request) {
+		lista = service.bebidasSin();
 
-		String usuario = request.getParameter("user");
-		String clave = request.getParameter("passwd");
+		request.setAttribute("bebidas", lista);
+		
+		return "bebidasSin";
+	}
+	
+	@GetMapping(value = "/comida")
+	public String comida(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		ArrayList<Productos> lista = new ArrayList<Productos>();
 
-		String pagina;
+		lista = service.comida();
 
+		request.setAttribute("comida", lista);
+		
+		System.out.println(id);
+		
+		return "comida";
+	}
+	
+	
+	@RequestMapping(value = "/comprarCon", method= { RequestMethod.GET, RequestMethod.POST })
+	public String comprarCon(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		String nombre = request.getParameter("nombre");
+		Integer unidades = Integer.parseInt(request.getParameter("comprar"));
+		Integer codProd = serviceProducto.sacarCodProd(nombre);
+		Integer codPed = id;
+		Integer codPedProd = serviceProducto.generarCodPedProd(); 
+		
+		PedidosProductos pp = new PedidosProductos();
+		pp.setCodPedProd(codPedProd);
+		pp.setPedido(codPed);
+		pp.setProducto(codProd);
+		pp.setUnidades(unidades);
+		
 		try {
-			service.nuevoUser(usuario, clave);
-			pagina = "loginCorrecto";
-		} catch (ClassNotFoundException e) {
-			pagina = "registrarFail";
-		} catch (SQLException e) {
-			pagina = "registrarFail";
+			Pedidos p = new Pedidos();
+			p.setCodPed(servicePedido.generarCodPed());
+			p.setFecha("10-03-2020");
+			p.setEnviado(0);
+			p.setCodRes(id);
+			
+			servicePedido.meterEnBd(p);
+		} catch (Exception e) {
+			System.out.println("Error " + e);
 		}
-
-		return pagina;
+		
+		serviceProducto.meterEnBd(pp);
+		
+		return "redirect:bebidasCon";
 	}
-
-	@RequestMapping(value = "/mantenimiento", method = { RequestMethod.POST, RequestMethod.GET })
-	public String mantenimiento(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
-
-		lista = service.sacarPelis();
-
-		request.setAttribute("listaPelis", lista);
-
-		return "mantenimiento";
-	}
-
-	@RequestMapping(value = "/nuevaPeli", method = RequestMethod.GET)
-	public String nuevaPeli() {
-
-		return "nuevaPelicula";
-	}
-
-	@RequestMapping(value = "/altaPeli", method = RequestMethod.POST)
-	public String altaPeli(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		String director = request.getParameter("director");
-		String titulo = request.getParameter("titulo");
-		String fecha = request.getParameter("fecha");
-		String url = request.getParameter("url");
-		String descripcion = request.getParameter("descripcion");
-
-		String pagina;
-
-		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
-
-		lista = service.verPelis();
-
-		request.setAttribute("listaPelis", lista);
-
+	
+	@RequestMapping(value = "/comprarSin", method= { RequestMethod.GET, RequestMethod.POST })
+	public String comprarSin(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		String nombre = request.getParameter("nombre");
+		Integer unidades = Integer.parseInt(request.getParameter("comprar"));
+		Integer codProd = serviceProducto.sacarCodProd(nombre);
+		Integer codPed = id;
+		Integer codPedProd = serviceProducto.generarCodPedProd(); 
+		
+		PedidosProductos pp = new PedidosProductos();
+		pp.setCodPedProd(codPedProd);
+		pp.setPedido(codPed);
+		pp.setProducto(codProd);
+		pp.setUnidades(unidades);
+		
 		try {
-			service.nuevaPeli(director, titulo, fecha, url, descripcion);
-			pagina = "redirect:mantenimiento";
-		} catch (ClassNotFoundException e) {
-			pagina = "nuevaPeliculaFail";
-		} catch (SQLException e) {
-			pagina = "nuevaPeliculaFail";
+			Pedidos p = new Pedidos();
+			p.setCodPed(servicePedido.generarCodPed());
+			p.setFecha("10-03-2020");
+			p.setEnviado(0);
+			p.setCodRes(id);
+			
+			servicePedido.meterEnBd(p);
+		} catch (Exception e) {
+			System.out.println("Error " + e);
 		}
-
-		return pagina;
+		
+		serviceProducto.meterEnBd(pp);
+		
+		return "redirect:bebidasSin";
 	}
-
-	@RequestMapping(value = "/borrarPeli", method = RequestMethod.POST)
-	public String borrarPeli(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		String id = request.getParameter("id");
-
-		String pagina;
-
-		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
-
-		lista = service.verPelis();
-
-		request.setAttribute("listaPelis", lista);
-
+	
+	@RequestMapping(value = "/comprarComida", method= { RequestMethod.GET, RequestMethod.POST })
+	public String comprarComida(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		String nombre = request.getParameter("nombre");
+		Integer unidades = Integer.parseInt(request.getParameter("comprar"));
+		Integer codProd = serviceProducto.sacarCodProd(nombre);
+		Integer codPed = id;
+		Integer codPedProd = serviceProducto.generarCodPedProd(); 
+		
+		PedidosProductos pp = new PedidosProductos();
+		pp.setCodPedProd(codPedProd);
+		pp.setPedido(codPed);
+		pp.setProducto(codProd);
+		pp.setUnidades(unidades);
+		
 		try {
-			service.borrarPeli(id);
-			pagina = "redirect:mantenimiento";
-		} catch (ClassNotFoundException e) {
-			pagina = "borrarPeliculaFail";
-		} catch (SQLException e) {
-			pagina = "borrarPeliculaFail";
+			Pedidos p = new Pedidos();
+			p.setCodPed(servicePedido.generarCodPed());
+			p.setFecha("10/03/2020");
+			p.setEnviado(0);
+			p.setCodRes(id);
+			
+			servicePedido.meterEnBd(p);
+		} catch (Exception e) {
+			System.out.println("Error " + e);
 		}
-
-		return pagina;
+		
+		serviceProducto.meterEnBd(pp);
+		
+		return "redirect:comida";
 	}
-
-	@RequestMapping(value = "/modificarPeli", method = RequestMethod.POST)
-	public String modificarPeli(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
-
-		lista = service.verPelis();
-
-		request.setAttribute("listaPelis", lista);
-
-		String id = request.getParameter("id");
-		String director = request.getParameter("director");
-		String titulo = request.getParameter("titulo");
-		String fecha = request.getParameter("fecha");
-		String url = request.getParameter("url");
-		String descripcion = request.getParameter("descripcion");
-
-		request.setAttribute("id", id);
-		request.setAttribute("director", director);
-		request.setAttribute("titulo", titulo);
-		request.setAttribute("fecha", fecha);
-		request.setAttribute("url", url);
-		request.setAttribute("descripcion", descripcion);
-
-		return "modificarPelicula";
+	
+	@RequestMapping(value = "/carrito", method= { RequestMethod.GET, RequestMethod.POST })
+	public String carrito(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		ArrayList<PedidosProductos> lista = new ArrayList<PedidosProductos>();
+		
+		lista= serviceCarrito.carrito();
+		
+		request.setAttribute("carrito", lista);
+		
+		return "carrito";
 	}
-
-	@RequestMapping(value = "/modificarPelicula", method = RequestMethod.POST)
-	public String modificarPelicula(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
-
-		lista = service.verPelis();
-
-		request.setAttribute("listaPelis", lista);
-
-		String id = request.getParameter("id2");
-		String director = request.getParameter("director2");
-		String titulo = request.getParameter("titulo2");
-		String fecha = request.getParameter("fecha2");
-		String url = request.getParameter("url2");
-		String descripcion = request.getParameter("descripcion2");
-
-		service.modificarPeli(Integer.parseInt(id), director, titulo, fecha, url, descripcion);
-
-		return "redirect:mantenimiento";
+	
+	
+	@GetMapping(value = "/pedido")
+	public String pedido(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		Email em = new Email();
+		
+		em.enviarCorreo(correo);
+		serviceCarrito.vaciarCarrito();
+		
+		return "pedido";
 	}
-
-	@RequestMapping(value = "/consultar", method = RequestMethod.GET)
-	public String consultar() {
-
-		return "consultar";
+	
+	@PostMapping(value = "/borrarCarrito")
+	public String borrarCarrito(HttpServletRequest request) throws ClassNotFoundException, SQLException {
+		
+		String codigo = request.getParameter("codigo");
+		
+		serviceCarrito.borrarCarrito(codigo);
+		
+		return "redirect:carrito";
 	}
-
-	@RequestMapping(value = "/consultarPelis", method = RequestMethod.POST)
-	public String consultarPelis(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		String director = request.getParameter("director");
-
-		request.setAttribute("director", director);
-
-		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
-
-		lista = service.consultarDirector(director);
-
-		request.setAttribute("pelis", lista);
-
-		return "consultarPelis";
-	}
-
-	@RequestMapping(value = "/finalizar", method = RequestMethod.GET)
-	public String finalizar(HttpServletRequest request) {
-
-		HashSet<String> lista;
-
-		lista = service.listaDirectores();
-
-		request.setAttribute("directoresConsultados", lista);
-
-		return "finalizar";
-	}
-
-	@RequestMapping(value = "/fin", method = { RequestMethod.POST, RequestMethod.GET })
-	public String fin() {
-
-		HashSet<String> lista;
-
-		lista = service.listaDirectores();
-
-		lista.clear();
-
-		return "index";
-	}
-
-	@RequestMapping(value = "/peliculas", method = RequestMethod.GET)
-	public String peliculas(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
-
-		lista = service.sacarPelis();
-
-		request.setAttribute("pelis", lista);
-
-		return "peliculas";
-	}
-
-	@RequestMapping(value = "/filtroPelis", method = RequestMethod.POST)
-	public String filtroPeliculas(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		ArrayList<Pelicula> lista = new ArrayList<Pelicula>();
-
-		String titulo = request.getParameter("titulo");
-
-		lista = service.sacarPelisFiltro(titulo);
-
-		request.setAttribute("pelis", lista);
-
-		return "peliculas";
-	}
-
-	@RequestMapping(value = "/informacion", method = RequestMethod.POST)
-	public String informacion(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		String titulo = request.getParameter("titulo");
-
-		request.setAttribute("titulo", titulo);
-
-		ArrayList<Pelicula> peli = new ArrayList<Pelicula>();
-
-		peli = service.infoPeli(titulo);
-
-		request.setAttribute("peli", peli);
-
-		return "informacion";
-	}
-
-	@RequestMapping(value = "/evaluar", method = RequestMethod.POST)
-	public String evaluar(HttpServletRequest request) throws ClassNotFoundException, SQLException {
-
-		String id = request.getParameter("id");
-
-		String valoracion = request.getParameter("rating");
-
-		service.evaluar(id, valoracion);
-
-		return "redirect:peliculas";
-	}
+	
+	
+	
 
 }

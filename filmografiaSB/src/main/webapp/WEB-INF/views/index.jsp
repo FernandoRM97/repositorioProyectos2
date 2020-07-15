@@ -13,37 +13,26 @@
 	<nav class="navbar navbar-light bg-light"
 		style="background-color: #E7F5F4;">
 		<a class="navbar-brand" href="/index"> <img
-			src="https://img2.freepng.es/20180404/gww/kisspng-cinema-clapperboard-film-computer-icons-clip-art-cine-5ac51166bd41a5.7114468315228644867752.jpg"
+			src="https://image.flaticon.com/icons/png/512/45/45332.png"
 			width="45" height="20" alt="filmografia" style="padding-left: 10px">
-			Filmografía
+			Restaurante
 		</a>
-		<p align="right">
-			<a href="/login"><input type="button" class="btn btn-info"
-				value="Login"></a>
-		</p>
 	</nav>
 
 	<br>
 	<br>
-	<h1 align="center">CINE</h1>
+	<h1 align="center">RESTAURANTE</h1>
 	<br>
+
 	<p align="center">
-		<a href="/info"> <input type="button" class="btn btn-info"
-			value="Información general"></a>
-	</p>
-	<p align="center">
-		<a href="/consultar"><input type="button" class="btn btn-info"
-			value="Consultar directores"></a>
-	</p>
-	<p align="center">
-		<a href="/peliculas"><input type="button" class="btn btn-info"
-			value="Mostrar Peliculas"></a>
+		<a href="/login"><input type="button" class="btn btn-info"
+			value="Login"></a>
 	</p>
 
 	<footer class="page-footer font-small blue"
 		style="background-color: #E7F5F4; position: fixed; clear: both; bottom: 0; width: 100%">
 		<div class="footer-copyright text-center py-3">
-			© 2019 Copyright: <a href="/index"> Filmografia.com </a>
+			© 2019 Copyright: <a href="/index"> Restaurante.com </a>
 		</div>
 	</footer>
 
