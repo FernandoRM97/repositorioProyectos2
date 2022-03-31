@@ -66,7 +66,7 @@
 		<finalName>springapp5</finalName>
 	</build>
 	<properties>
-		<org.springframework.version>5.0.3.RELEASE</org.springframework.version>
+		<org.springframework.version>5.3.18</org.springframework.version>
 		<org.springframework.data.version>2.0.7.RELEASE</org.springframework.data.version>
 	</properties>
 </project>
